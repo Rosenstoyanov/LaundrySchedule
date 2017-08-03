@@ -1,5 +1,7 @@
 var router = require('express').Router();
+var bcrypt = require('bcrypt');
 var User = require(__base + 'app/db').models.User;
+var jwt = require(__base + 'app/utils/jwt');
 
 router.get("/", function(req, res){
   res.send("Hello Word")
@@ -20,6 +22,20 @@ router.post('/register', function(req, res) {
       res.status(401).json({message: "invalid email"})
     }
 
+});
+
+router.post('/login', function(req, res) {
+    var email = req.body.email;
+    var password = req.body.password;
+    User.findOne({ email: email }, function(err, user) {
+        if(err) return res.status(500).end();
+        bcrypt.compare(password, user.password, function(err, match) {
+            if(err) return res.status(500).end();
+            if(!match) return res.status(200).json({ message: 'Wrong email or password!' });
+            var token = jwt.sign({ _id: user._id });
+            res.status(200).json({ token: token });
+        });
+    });
 });
 
 function validateEmail(email) {
