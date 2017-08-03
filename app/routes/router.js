@@ -38,6 +38,23 @@ router.post('/login', function(req, res) {
     });
 });
 
+function mid(req, res, next) {
+    var token;
+    if(token = req.headers['x-access-token']) {
+         jwt.verify(token).then(decoded => {
+           console.log("headers decoded: " + decoded)
+           if(decoded.email === 'ivan@abv.bg') next();
+         });
+         return;
+    }
+    res.status(401).json({ message: "invalid token" });
+}
+
+router.get('/laundries', mid, function(req, res) {
+  res.status(200).json({ message: "success" })
+});
+
+
 function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
