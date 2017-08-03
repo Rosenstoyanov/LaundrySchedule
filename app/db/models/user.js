@@ -3,8 +3,8 @@ var bcrypt = require('bcrypt');
 var config = require(__base + 'app/config');
 
 var UserSchemaObj = {
-    email: String,
-    password: String
+    email: { type : String , unique : true, required : true },
+    password: { type : String , required : true }
 };
 
 var userSchema = db.createSchema(UserSchemaObj);

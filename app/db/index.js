@@ -6,13 +6,16 @@ var path = require('path');
 
 var files = fs.readdirSync(modelsPath);
 
-mongoose.connect(config.db.url, function(err){
+mongoose.connect(config.db.url, {
+  useMongoClient: true,}, function(err){
     if(err){
         console.log("Not connected to the database. :"+err);
     } else{
         console.log("Connected to MONGODB!");
     }
 });
+
+
 
 module.exports.createModel = (name, schema) => mongoose.model(name, schema);
 

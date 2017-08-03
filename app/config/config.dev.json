@@ -1,6 +1,6 @@
 {
     "db" : {
-        "url": "mongodb://localhost/6-expr",
+        "url": "mongodb://localhost/laundry",
         "saltRounds": 10
     },
     "jwt": {
