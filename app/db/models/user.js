@@ -4,7 +4,8 @@ var config = require(__base + 'app/config');
 
 var UserSchemaObj = {
     email: { type : String , unique : true, required : true },
-    password: { type : String , required : true }
+    password: { type : String , required : true },
+    token: { type : String }
 };
 
 var userSchema = db.createSchema(UserSchemaObj);
