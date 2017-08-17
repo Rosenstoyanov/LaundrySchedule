@@ -9,7 +9,7 @@ router.post('/register', function(req, res) {
     var password = req.body.password;
 
     if (validateEmail(email)) {
-      var user = new User({ email: email, password: password, token: "" });
+      var user = new User({ email: email, password: password });
       user.save(function(err) {
         console.log("error: " + err);
           if(err) return res.status(500).json({message: "Something is wrong"});
@@ -58,6 +58,7 @@ function mid(req, res, next) {
         } else if (!user){
           return res.status(401).json({ message: "invalid token" });
         } else {
+          req.user = user;
           next();
         }
       });
@@ -73,14 +74,36 @@ function mid(req, res, next) {
 }
 
 router.get('/profile', mid, function(req, res) {
-  if(token = req.headers['x-access-token']) {
-    User.findOne({ token : token }, function(err, user){
-      if(err) return res.status(500).end();
-
-      res.status(200).json({ user: { email : user.email } })
-    });
+  var user = req.user.email
+  if (user) {
+    res.status(200).json({ user: { email : user.email } })
+  } else {
+    res.status(500).json({message: "Something is wrong"});
   }
 });
+
+router.post('/bookLaundry', mid, function(req, res){
+  var user = req.user;
+  var laundryId = req.body.laundryId
+  if (laundryId) {
+    Laundry.findOne({ _id: laundryId }, function(err, laundry){
+      if (err) return res.status(500).json({message: "Can not find Something is wrong"})
+
+      if (laundry.booked) {
+        return res.status(200).json({message: "Laundry has been booked"})
+      } else {
+        Laundry.findByIdAndUpdate(laundryId, { $set: { booked: true, user: user._id }}, { new: true }, function (err, user) {
+          if (err) return res.status(500).json({message: "Could not update Something is wrong"})
+
+          res.status(200).json({message: "Laundry has been booked"})
+
+        });
+      }
+    });
+  } else {
+    res.status(400).json({message: "Laundry id is required"})
+  }
+})
 
 router.get('/laundries', function(req, res) {
   Laundry.find({}, function(err, allLaundries) {
