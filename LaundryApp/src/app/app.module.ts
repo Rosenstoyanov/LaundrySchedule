@@ -14,6 +14,7 @@ import { LaundryService } from './services/laundry.service';
 import { AppRoutingModule } from './app-routing.module';
 import { RegisterComponent } from './register/register.component';
 import { LaundyListComponent } from './laundy-list/laundy-list.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { LaundyListComponent } from './laundy-list/laundy-list.component';
     LoginComponent,
     PageNotFoundComponent,
     RegisterComponent,
-    LaundyListComponent
+    LaundyListComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

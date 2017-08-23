@@ -3,6 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router'
 import { ResponseModel } from '../models/response.model';
 import { Auth } from '../models/auth';
+import { Events } from '../utils/events';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
         console.log("modelStatus: " + responseModel.isSuccess + " message: " + responseModel.message);
         if (responseModel.isSuccess) {
           this.router.navigate(['/home']);
-          // Events.onUserLogged.emit();
+          Events.doLoggedIn.emit();
         } else {
           this.loginFailed = true;
           this.error = responseModel.message;
