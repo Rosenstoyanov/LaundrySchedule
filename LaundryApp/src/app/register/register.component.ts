@@ -5,13 +5,13 @@ import { ResponseModel } from '../models/response.model';
 import { Auth } from '../models/auth';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   user = new Auth('', '');
-  loginFailed = false;
+  registerFailed = false;
   error = ''
 
   constructor(private authService: AuthService, private router: Router) { }
@@ -19,14 +19,14 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  doLogin() {
-    this.authService.login(this.user.email, this.user.password).subscribe((responseModel: ResponseModel) => {
-      console.log("modelStatus: " + responseModel.isSuccess + " message: " + responseModel.message );
+  doRegister() {
+    this.authService.register(this.user.email, this.user.password).subscribe((responseModel: ResponseModel) => {
+      console.log("modelStatus: " + responseModel.isSuccess + " message: " + responseModel.message);
       if (responseModel.isSuccess) {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/login']);
         // Events.onUserLogged.emit();
       } else {
-        this.loginFailed = true;
+        this.registerFailed = true;
         this.error = responseModel.message;
       }
     });

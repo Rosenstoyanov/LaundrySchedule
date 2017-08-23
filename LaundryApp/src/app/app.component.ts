@@ -11,6 +11,7 @@ export class AppComponent {
 
   constructor(private authService: AuthService) {
     this.loggedUser = localStorage.getItem('currentUser') ? true : false;
+    console.log("islogged: " + this.loggedUser)
   }
 
   logout() {
