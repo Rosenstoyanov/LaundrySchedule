@@ -127,7 +127,10 @@ router.post('/bookLaundry', mid, function (req, res) {
       if (laundry.booked) {
         return res.status(200).json({ message: "Laundry has been booked" })
       } else {
-        Laundry.findByIdAndUpdate(laundryId, { $set: { booked: true, user: user._id } }, { new: true }, function (err, user) {
+        //adding 2hours
+        var expirationAt = Date.now();
+        expirationAt += 2*60*60*1000
+        Laundry.findByIdAndUpdate(laundryId, { $set: { booked: true, user: user._id, bookedAt: Date.now(), expiresAt: expirationAt } }, { new: true }, function (err, user) {
           if (err) return res.status(400).json({ message: "Could not update Something is wrong" })
 
           res.status(200).json({ message: "Laundry has been booked" })

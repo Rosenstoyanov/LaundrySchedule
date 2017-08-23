@@ -5,6 +5,8 @@ export class Laundry {
         public title: String,
         public description: String,
         public booked: Boolean,
-        public userId: Number
+        public userId: Number,
+        public bookedAt: Number,
+        public expiresAt: Number
     ){}
 }

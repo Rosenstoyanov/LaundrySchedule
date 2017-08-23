@@ -5,7 +5,9 @@ var LaundrySchemaObj = {
     title: { type : String, required : true },
     description: { type : String, required : true },
     booked: { type : Boolean, default : false },
-    user: { type : mongoose.Schema.Types.ObjectId, ref: 'User' }
+    user: { type : mongoose.Schema.Types.ObjectId, ref: 'User' },
+    bookedAt:  { type: Number, default: Date.now() },
+    expiresAt:  { type: Number, default: Date.now() }    
 };
 
 var laundrySchema = db.createSchema(LaundrySchemaObj);
