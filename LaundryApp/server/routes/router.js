@@ -97,12 +97,6 @@ function mid(req, res, next) {
         next();
       }
     });
-    // console.log(token)
-    //  jwt.verify(token).then(decoded => {
-    //    console.log("headers decoded: " + decoded)
-    //    if(decoded.email === 'test@abv.bg') next();
-    //  });
-    //  console.log("meh")
   } else {
     res.status(401).json({ message: "token is missing" });
   }
@@ -116,13 +110,13 @@ router.get('/profile', mid, function (req, res) {
     res.status(500).json({ message: "Something is wrong" });
   }
 });
-// mid,
+
 router.post('/bookLaundry', mid, function (req, res) {
   var user = req.user;
   var laundryId = req.body.laundryId
   if (laundryId) {
     Laundry.findOne({ _id: laundryId }, function (err, laundry) {
-      if (err) return res.status(500).json({ message: "Can not find Something is wrong" })
+      if (err) return res.status(500).json({ message: "Something went wrong", dev_message: "Can not find Something is wrong" })
 
       if (laundry.booked) {
         return res.status(200).json({ message: "Laundry has been booked" })
@@ -131,7 +125,7 @@ router.post('/bookLaundry', mid, function (req, res) {
         var expirationAt = Date.now();
         expirationAt += 2*60*60*1000
         Laundry.findByIdAndUpdate(laundryId, { $set: { booked: true, user: user._id, bookedAt: Date.now(), expiresAt: expirationAt } }, { new: true }, function (err, user) {
-          if (err) return res.status(400).json({ message: "Could not update Something is wrong" })
+          if (err) return res.status(400).json({ message: "Something went wrong", dev_message:  "Could not update Something is wrong" })
 
           res.status(200).json({ message: "Laundry has been booked" })
 
