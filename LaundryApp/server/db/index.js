@@ -6,6 +6,7 @@ var path = require('path');
 
 var files = fs.readdirSync(modelsPath);
 
+mongoose.Promise = global.Promise;
 mongoose.connect(config.db.url, {
   useMongoClient: true,}, function(err){
     if(err){

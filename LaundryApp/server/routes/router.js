@@ -3,6 +3,7 @@ var bcrypt = require('bcrypt');
 var User = require(__base + 'server/db').models.User;
 var Laundry = require(__base + 'server/db').models.Laundry;
 var jwt = require(__base + 'server/utils/jwt');
+var dummyLaundryData = require(__base + 'server/utils/dummy-laundry-data.js');
 
 router.post('/register', function (req, res) {
   var email = req.body.email;
@@ -29,7 +30,6 @@ router.post('/register', function (req, res) {
 });
 
 router.post('/login', function (req, res) {
-  console.log('login requested ' + req)
   var email = req.body.email;
   var password = req.body.password;
 
@@ -75,14 +75,23 @@ router.get('/profiles', function (req, res) {
   });
 });
 
+router.get('/populateLaundries', function (req, res) {
+  if(dummyLaundryData.prepopulateLaundries()){
+    res.status(200).json({ message: "Success!!!"})
+  } else {
+    res.status(500).json({ message: "Something is wrong" })
+  }
+});
+
 function mid(req, res, next) {
   var token = req.headers['x-access-token'];
+
   if (token) {
     User.findOne({ token: token }, function (err, user) {
       if (err) {
         return res.status(500).json({ message: "Something is wrong" });
       } else if (!user) {
-        return res.status(401).json({ message: "invalid token" });
+        return res.status(401).json({ message: "Invalid token" });
       } else {
         req.user = user;
         next();
@@ -95,7 +104,7 @@ function mid(req, res, next) {
     //  });
     //  console.log("meh")
   } else {
-    res.status(400).json({ message: "token is missing" });
+    res.status(401).json({ message: "token is missing" });
   }
 }
 
@@ -107,7 +116,7 @@ router.get('/profile', mid, function (req, res) {
     res.status(500).json({ message: "Something is wrong" });
   }
 });
-
+// mid,
 router.post('/bookLaundry', mid, function (req, res) {
   var user = req.user;
   var laundryId = req.body.laundryId

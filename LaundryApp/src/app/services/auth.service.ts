@@ -10,6 +10,7 @@ export class AuthService {
 
     private loginUrl = 'http://localhost:3000/api/login';
     private registerUrl = 'http://localhost:3000/api/register';
+
     private requestOptions: RequestOptions;
 
     constructor(private http: Http, private router: Router) {
@@ -42,7 +43,7 @@ export class AuthService {
                 let token = response.json() && response.json().token;
                 console.log(token)
                 if (token) {
-                    localStorage.setItem('currentUser', JSON.stringify({ email: email, token: token }));
+                    localStorage.setItem('currentUser', JSON.stringify(new User(email, token)));
                     return new ResponseModel(true, '');
                 } else {
                     return new ResponseModel(false, 'Login failed');

@@ -1,0 +1,18 @@
+<div *ngFor="let laundry of laundtyList">
+  <div class="card text-center">
+    <div class="card-header">
+      Featured
+    </div>
+    <div class="card-body">
+      <h4 class="card-title">{{laundry.title}}</h4>
+      <p class="card-text">{{laundry.description}}</p>
+      <a class="btn btn-primary" *ngIf="!laundry.booked" (click)="bookLaundry(laundry)">Book</a>
+    </div>
+    <div *ngIf="laundry.booked" class="card-footer text-muted">
+      Laundry Booked
+    </div>
+    <div *ngIf="!laundry.booked" class="card-footer text-muted">
+      Laundry Free to Booked
+    </div>
+  </div>
+</div>

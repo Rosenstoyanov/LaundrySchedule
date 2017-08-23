@@ -9,16 +9,19 @@ import { AuthGuard } from './guards/auth.guard'
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 import { AuthService } from './services/auth.service';
+import { LaundryService } from './services/laundry.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { RegisterComponent } from './register/register.component';
+import { LaundyListComponent } from './laundy-list/laundy-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     PageNotFoundComponent,
-    RegisterComponent
+    RegisterComponent,
+    LaundyListComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,7 @@ import { RegisterComponent } from './register/register.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [AuthGuard, AuthService],
+  providers: [AuthGuard, AuthService, LaundryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

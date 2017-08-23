@@ -20,16 +20,17 @@ export class LoginComponent implements OnInit {
   }
 
   doLogin() {
-    this.authService.login(this.user.email, this.user.password).subscribe((responseModel: ResponseModel) => {
-      console.log("modelStatus: " + responseModel.isSuccess + " message: " + responseModel.message );
-      if (responseModel.isSuccess) {
-        this.router.navigate(['/home']);
-        // Events.onUserLogged.emit();
-      } else {
-        this.loginFailed = true;
-        this.error = responseModel.message;
-      }
-    });
+    this.authService.login(this.user.email, this.user.password)
+      .subscribe((responseModel: ResponseModel) => {
+        console.log("modelStatus: " + responseModel.isSuccess + " message: " + responseModel.message);
+        if (responseModel.isSuccess) {
+          this.router.navigate(['/home']);
+          // Events.onUserLogged.emit();
+        } else {
+          this.loginFailed = true;
+          this.error = responseModel.message;
+        }
+      });
   }
 
 }
