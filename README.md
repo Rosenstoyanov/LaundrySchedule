@@ -8,20 +8,20 @@ System designed for making reservations on the available laundries
 
 ## Servers
 
-Run `node server.js` for a dev server running on `http://localhost:3000/`.
-Run `ng serve` for a app server. Navigate to `http://localhost:4200/`.
-To start cron job open terminal and type: crontab -e
-add new line: 5 * * * * {pathToNode} {pathTo/crons/laundry-ready-cron.js}
+Run `node server.js` for a dev server running on `http://localhost:3000/`.  
+Run `ng serve` for a app server. Navigate to `http://localhost:4200/`.  
+To start cron job open terminal and type: crontab -e  
+add new line: 5 * * * * {pathToNode} {pathTo/crons/laundry-ready-cron.js}  
 
 ## Cron line description
 
-  5      *        *                *           *
-(min) (hpur) (day of month) (month of year) (weekday)
-* -> all
-1,2,5,7 -> period
-1-10 -> period
-1-10/2 -> period every two
-1 -> exact value
+  5      *        *                *           *  
+(min) (hpur) (day of month) (month of year) (weekday)  
+* -> all  
+1,2,5,7 -> period  
+1-10 -> period  
+1-10/2 -> period every two  
+1 -> exact value  
 
 ## Build
 
